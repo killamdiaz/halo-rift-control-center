@@ -2,7 +2,11 @@
 import React from 'react';
 import { Plus, User } from 'lucide-react';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onAddDeviceClick: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onAddDeviceClick }) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 h-16 px-6 flex items-center justify-between bg-black bg-opacity-50 backdrop-blur-md border-b border-halo-accent border-opacity-20">
       <div className="flex-shrink-0">
@@ -12,6 +16,7 @@ const Navbar: React.FC = () => {
         <button 
           className="p-2 rounded-lg hover:bg-halo-accent hover:bg-opacity-20 transition-all duration-300"
           aria-label="Add device"
+          onClick={onAddDeviceClick}
         >
           <Plus className="text-halo-accent w-6 h-6" />
         </button>

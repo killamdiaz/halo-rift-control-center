@@ -93,6 +93,10 @@ export default {
 				'fade-in': {
 					'0%': { opacity: '0' },
 					'100%': { opacity: '1' },
+				},
+				'radar-sweep': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' },
 				}
 			},
 			animation: {
@@ -100,6 +104,7 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'pulse-glow': 'pulse-glow 2s infinite',
 				'fade-in': 'fade-in 0.5s ease-out',
+				'radar-sweep': 'radar-sweep 4s infinite linear',
 			},
 			backgroundImage: {
 				'halo-gradient': 'linear-gradient(to bottom, #0a0a0a, #121212)'

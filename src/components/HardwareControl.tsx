@@ -3,9 +3,17 @@ import React, { useState } from 'react';
 import IMUSettings from './settings/IMUSettings';
 import MCUSettings from './settings/MCUSettings';
 import BatterySettings from './settings/BatterySettings';
+import GunSettings from './settings/GunSettings';
+import SuitSettings from './settings/SuitSettings';
 
-// Placeholder image path 
+// Placeholder image paths
 const shoePath = '/lovable-uploads/8d627895-211e-4178-b05a-5320f5a5b192.png';
+const gunPath = '/lovable-uploads/633e272a-0cda-4241-98d9-8cf940bdbd1a.png';
+const suitPath = '/lovable-uploads/914d44f7-0a8f-4855-9c6f-78b52b09c399.png';
+
+interface HardwareControlProps {
+  deviceType: string;
+}
 
 type Hotspot = {
   id: string;
@@ -15,10 +23,8 @@ type Hotspot = {
   linePosition?: { length: string; angle: string; top: string; left: string };
 };
 
-const HardwareControl: React.FC = () => {
-  const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
-  
-  const hotspots: Hotspot[] = [
+const deviceHotspots = {
+  shoe: [
     { 
       id: 'imu',
       label: 'IMU',
@@ -40,20 +46,99 @@ const HardwareControl: React.FC = () => {
       position: { top: '75%', left: '45%' },
       linePosition: { length: '70px', angle: '90deg', top: '80%', left: '45%' }
     }
-  ];
+  ],
+  gun: [
+    { 
+      id: 'trigger',
+      label: 'TRIGGER',
+      sublabel: 'Sensitivity',
+      position: { top: '60%', left: '75%' },
+      linePosition: { length: '80px', angle: '45deg', top: '65%', left: '70%' }
+    },
+    { 
+      id: 'haptic', 
+      label: 'HAPTIC',
+      sublabel: 'Feedback',
+      position: { top: '30%', left: '40%' },
+      linePosition: { length: '70px', angle: '135deg', top: '35%', left: '45%' }
+    },
+    { 
+      id: 'battery', 
+      label: 'BATTERY',
+      sublabel: 'Power Mode',
+      position: { top: '50%', left: '20%' },
+      linePosition: { length: '60px', angle: '180deg', top: '50%', left: '25%' }
+    }
+  ],
+  suit: [
+    { 
+      id: 'vibration',
+      label: 'VIBRATION',
+      sublabel: 'Feedback',
+      position: { top: '35%', left: '30%' },
+      linePosition: { length: '70px', angle: '135deg', top: '40%', left: '35%' }
+    },
+    { 
+      id: 'sensors', 
+      label: 'SENSORS',
+      sublabel: 'Calibration',
+      position: { top: '50%', left: '70%' },
+      linePosition: { length: '80px', angle: '0deg', top: '50%', left: '65%' }
+    },
+    { 
+      id: 'battery', 
+      label: 'BATTERY',
+      sublabel: 'Power Mode',
+      position: { top: '75%', left: '50%' },
+      linePosition: { length: '60px', angle: '90deg', top: '70%', left: '50%' }
+    }
+  ]
+};
+
+const deviceImages = {
+  shoe: shoePath,
+  gun: gunPath,
+  suit: suitPath
+};
+
+const HardwareControl: React.FC<HardwareControlProps> = ({ deviceType = 'shoe' }) => {
+  const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
+  
+  const hotspots: Hotspot[] = deviceHotspots[deviceType as keyof typeof deviceHotspots] || [];
+  const imagePath = deviceImages[deviceType as keyof typeof deviceImages] || shoePath;
 
   const toggleHotspot = (id: string) => {
     setActiveHotspot(activeHotspot === id ? null : id);
   };
 
   const renderSettingsPanel = () => {
-    switch (activeHotspot) {
-      case 'imu':
+    if (!activeHotspot) return null;
+
+    switch (`${deviceType}-${activeHotspot}`) {
+      // Shoe settings
+      case 'shoe-imu':
         return <IMUSettings onClose={() => setActiveHotspot(null)} />;
-      case 'mcu':
+      case 'shoe-mcu':
         return <MCUSettings onClose={() => setActiveHotspot(null)} />;
-      case 'battery':
+      case 'shoe-battery':
         return <BatterySettings onClose={() => setActiveHotspot(null)} />;
+      
+      // Gun settings
+      case 'gun-trigger':
+        return <GunSettings type="trigger" onClose={() => setActiveHotspot(null)} />;
+      case 'gun-haptic':
+        return <GunSettings type="haptic" onClose={() => setActiveHotspot(null)} />;
+      case 'gun-battery':
+        return <BatterySettings onClose={() => setActiveHotspot(null)} />;
+      
+      // Suit settings
+      case 'suit-vibration':
+        return <SuitSettings type="vibration" onClose={() => setActiveHotspot(null)} />;
+      case 'suit-sensors':
+        return <SuitSettings type="sensors" onClose={() => setActiveHotspot(null)} />;
+      case 'suit-battery':
+        return <BatterySettings onClose={() => setActiveHotspot(null)} />;
+      
       default:
         return null;
     }
@@ -68,8 +153,8 @@ const HardwareControl: React.FC = () => {
         {/* Main hardware image */}
         <div className="relative mx-auto max-w-lg">
           <img 
-            src={shoePath} 
-            alt="HALO Smart Shoe" 
+            src={imagePath} 
+            alt={`HALO ${deviceType}`} 
             className="w-full h-auto object-contain"
           />
 
