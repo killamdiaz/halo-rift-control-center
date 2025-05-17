@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Boot as BootIcon, Footprints, Gun as GunIcon, Gamepad2, ShirtIcon } from 'lucide-react';
+import { Footprints, Gamepad2, ShirtIcon } from 'lucide-react';
 import { 
   Sidebar, 
   SidebarContent, 
@@ -23,7 +23,6 @@ const DeviceSidebar: React.FC<DeviceSidebarProps> = ({
   const { state } = useSidebar();
   const isCollapsed = state === 'collapsed';
 
-  // Using Footprints for shoe and Gamepad2 for gun as alternatives
   const devices = [
     { id: 'shoe', label: 'Shoe', icon: Footprints },
     { id: 'gun', label: 'Gun', icon: Gamepad2 },
