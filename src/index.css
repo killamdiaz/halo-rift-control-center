@@ -151,6 +151,35 @@
       transform: rotate(360deg);
     }
   }
+  
+  /* Keyboard specific styles */
+  .keyboard-key {
+    @apply w-10 h-10 rounded bg-black bg-opacity-60 border border-white border-opacity-30
+           flex items-center justify-center transition-all duration-300
+           hover:border-halo-accent hover:border-opacity-70 hover:bg-halo-accent hover:bg-opacity-20;
+  }
+  
+  .keyboard-key-active {
+    @apply border-halo-accent bg-halo-accent bg-opacity-30;
+    box-shadow: 0 0 8px rgba(0, 204, 255, 0.7), inset 0 0 5px rgba(0, 204, 255, 0.3);
+  }
+  
+  /* Pulse animation with glow */
+  .animate-pulse-glow {
+    animation: pulse-glow 2s infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0% {
+      box-shadow: 0 0 0 0 rgba(0, 204, 255, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(0, 204, 255, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(0, 204, 255, 0);
+    }
+  }
 }
 
 @keyframes fade-in {
@@ -179,4 +208,14 @@
 
 .animate-radar-sweep {
   animation: radar-sweep 4s infinite linear;
+}
+
+/* Background gradient for HALO interface */
+.bg-halo-gradient {
+  background: linear-gradient(135deg, #0a0a0a 0%, #121212 100%);
+}
+
+/* Improved glass effect for sidebar and panels */
+.glassmorphism {
+  @apply backdrop-blur-lg bg-black bg-opacity-40 border border-halo-accent border-opacity-20;
 }

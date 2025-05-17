@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Footprints, Gamepad2, ShirtIcon } from 'lucide-react';
+import { Footprints, Gamepad2, ShirtIcon, Keyboard, TestTube } from 'lucide-react';
 import { 
   Sidebar, 
   SidebarContent, 
@@ -26,7 +26,9 @@ const DeviceSidebar: React.FC<DeviceSidebarProps> = ({
   const devices = [
     { id: 'shoe', label: 'Shoe', icon: Footprints },
     { id: 'gun', label: 'Gun', icon: Gamepad2 },
-    { id: 'suit', label: 'Suit', icon: ShirtIcon }
+    { id: 'suit', label: 'Suit', icon: ShirtIcon },
+    { id: 'mapping', label: 'Mapping', icon: Keyboard },
+    { id: 'test', label: 'Test Mode', icon: TestTube }
   ];
 
   return (
@@ -38,33 +40,26 @@ const DeviceSidebar: React.FC<DeviceSidebarProps> = ({
         <SidebarTrigger className="mb-8 self-end hover:text-halo-accent transition-colors" />
         <SidebarMenu>
           {devices.map((device) => (
-            <SidebarMenuItem key={device.id} className="relative">
+            <SidebarMenuItem key={device.id} className="relative mb-3">
               {currentDevice === device.id && (
                 <div className="absolute left-0 top-0 w-1 h-full bg-halo-accent rounded-r-md glow-effect"></div>
               )}
               <SidebarMenuButton
-                className={`w-full transition-all duration-300 hover:scale-105 group ${
+                className={`w-full h-12 flex items-center justify-center transition-all duration-300 hover:scale-110 group ${
                   currentDevice === device.id 
                     ? 'bg-halo-darker bg-opacity-70 text-halo-accent' 
                     : 'hover:bg-halo-darker hover:bg-opacity-40'
                 }`}
                 onClick={() => onDeviceChange(device.id)}
-                tooltip={isCollapsed ? device.label : undefined}
+                tooltip={device.label}
               >
-                <device.icon className={`h-5 w-5 transition-all duration-300 ${
+                <device.icon className={`h-6 w-6 transition-all duration-300 ${
                   currentDevice === device.id 
                     ? 'text-halo-accent' 
                     : 'group-hover:text-halo-accent'
                 }`} />
-                {!isCollapsed && (
-                  <span className={`ml-2 transition-all duration-300 ${
-                    currentDevice === device.id 
-                      ? 'text-halo-accent font-medium' 
-                      : ''
-                  }`}>{device.label}</span>
-                )}
                 {currentDevice === device.id && (
-                  <div className="absolute inset-0 rounded-md border border-halo-accent border-opacity-20 pointer-events-none"></div>
+                  <div className="absolute inset-0 rounded-md border border-halo-accent border-opacity-30 pointer-events-none glow-effect"></div>
                 )}
               </SidebarMenuButton>
             </SidebarMenuItem>
