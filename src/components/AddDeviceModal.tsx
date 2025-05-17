@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Boot, Gun, ShirtIcon } from 'lucide-react';
+import { Footprints, Gamepad2, ShirtIcon } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 interface AddDeviceModalProps {
@@ -25,10 +25,10 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({ open, onOpenChange }) =
   const [isScanning, setIsScanning] = useState(false);
   const [scannedDevices, setScannedDevices] = useState<ScannedDevice[]>([]);
   
-  // Options for device types
+  // Options for device types with correct icons
   const deviceOptions: DeviceOption[] = [
-    { id: 'shoe', label: 'Shoe', icon: Boot },
-    { id: 'gun', label: 'Gun', icon: Gun },
+    { id: 'shoe', label: 'Shoe', icon: Footprints },
+    { id: 'gun', label: 'Gun', icon: Gamepad2 },
     { id: 'suit', label: 'Suit', icon: ShirtIcon },
   ];
   
@@ -120,8 +120,8 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({ open, onOpenChange }) =
                 className="flex items-center justify-between bg-black bg-opacity-50 border border-halo-accent border-opacity-20 rounded-md p-3 animate-fade-in"
               >
                 <div className="flex items-center">
-                  {device.type === 'shoe' && <Boot className="w-5 h-5 text-halo-accent mr-2" />}
-                  {device.type === 'gun' && <Gun className="w-5 h-5 text-halo-accent mr-2" />}
+                  {device.type === 'shoe' && <Footprints className="w-5 h-5 text-halo-accent mr-2" />}
+                  {device.type === 'gun' && <Gamepad2 className="w-5 h-5 text-halo-accent mr-2" />}
                   {device.type === 'suit' && <ShirtIcon className="w-5 h-5 text-halo-accent mr-2" />}
                   <span>{device.name}</span>
                 </div>
