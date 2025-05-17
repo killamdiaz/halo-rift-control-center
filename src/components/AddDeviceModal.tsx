@@ -71,7 +71,7 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({ open, onOpenChange }) =
   
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-black bg-opacity-90 border border-halo-accent border-opacity-30 text-white max-w-2xl">
+      <DialogContent className="bg-black bg-opacity-90 border border-halo-accent border-opacity-30 text-white max-w-2xl backdrop-blur-lg">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold neon-text text-center">Add New HALO Device</DialogTitle>
         </DialogHeader>
@@ -80,17 +80,17 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({ open, onOpenChange }) =
           {deviceOptions.map((option) => (
             <Card 
               key={option.id} 
-              className="bg-black bg-opacity-70 border border-halo-accent border-opacity-20 hover:border-opacity-60 transition-all duration-300 cursor-pointer group"
+              className="bg-black bg-opacity-70 border border-halo-accent border-opacity-20 hover:border-opacity-60 transition-all duration-300 cursor-pointer group backdrop-blur-sm"
             >
               <CardContent className="flex flex-col items-center justify-center p-6">
-                <option.icon className="w-12 h-12 text-halo-accent mb-3 group-hover:text-white transition-colors" />
+                <option.icon className="w-12 h-12 text-halo-accent mb-3 group-hover:text-white transition-colors group-hover:scale-110 duration-300" />
                 <h3 className="text-md font-semibold text-center">{option.label}</h3>
               </CardContent>
             </Card>
           ))}
         </div>
         
-        {/* Radar scanner */}
+        {/* Radar scanner with fixed rotation point */}
         <div className="mt-8 relative flex flex-col items-center">
           <div className="radar-container w-60 h-60 relative">
             <div className="radar-background absolute inset-0 rounded-full border border-halo-accent border-opacity-30"></div>
@@ -102,8 +102,14 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({ open, onOpenChange }) =
               <div className="radar-line absolute top-1/2 left-1/2 h-px bg-halo-accent w-1/2 origin-left" style={{ transform: 'rotate(90deg)' }}></div>
             </div>
             {isScanning && (
-              <div className="radar-sweep absolute top-1/2 left-1/2 h-1/2 w-1 bg-halo-accent origin-bottom animate-radar-sweep">
-                <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-r from-halo-accent to-transparent opacity-30 rounded-full" style={{ transform: 'translate(-50%, -50%)' }}></div>
+              <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                <div className="radar-sweep absolute size-full origin-center">
+                  <div className="absolute top-1/2 left-1/2 size-1/2 origin-top-left rotate-[270deg]">
+                    <div className="absolute top-0 left-0 h-0.5 w-full bg-halo-accent shadow-[0_0_10px_rgba(0,204,255,0.7)]">
+                      <div className="absolute top-0 right-0 size-16 bg-gradient-to-l from-halo-accent to-transparent opacity-40 rounded-full blur-sm" style={{ transform: 'translate(50%, -50%)' }}></div>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -117,7 +123,7 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({ open, onOpenChange }) =
             {scannedDevices.map((device, index) => (
               <div 
                 key={index}
-                className="flex items-center justify-between bg-black bg-opacity-50 border border-halo-accent border-opacity-20 rounded-md p-3 animate-fade-in"
+                className="flex items-center justify-between bg-black bg-opacity-50 border border-halo-accent border-opacity-20 rounded-md p-3 animate-fade-in hover:border-opacity-50 hover:bg-opacity-70 transition-all duration-300"
               >
                 <div className="flex items-center">
                   {device.type === 'shoe' && <Footprints className="w-5 h-5 text-halo-accent mr-2" />}

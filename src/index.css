@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -99,11 +100,12 @@
     @apply absolute flex items-center justify-center w-12 h-12 rounded-full 
            bg-halo-accent bg-opacity-20 border border-halo-accent cursor-pointer
            backdrop-blur-sm transition-all duration-300 animate-pulse-glow
-           hover:bg-opacity-40 hover:scale-110;
+           hover:bg-opacity-40 hover:scale-110 z-10;
   }
 
   .hotspot-line {
-    @apply absolute bg-halo-accent h-px;
+    @apply absolute bg-halo-accent h-px z-0;
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
   }
 
   .setting-panel {
@@ -131,10 +133,14 @@
     box-shadow: 0 0 8px rgba(0, 204, 255, 0.7);
   }
 
+  .glow-effect {
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.7);
+  }
+
   /* Radar animation */
   .radar-sweep {
     animation: radar-rotate 4s infinite linear;
-    transform-origin: bottom center;
+    transform-origin: center;
   }
 
   @keyframes radar-rotate {

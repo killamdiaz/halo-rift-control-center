@@ -30,20 +30,41 @@ const DeviceSidebar: React.FC<DeviceSidebarProps> = ({
   ];
 
   return (
-    <Sidebar variant="floating" className="border-r border-halo-accent border-opacity-20">
+    <Sidebar 
+      variant="floating" 
+      className="border-r border-halo-accent border-opacity-20 backdrop-blur-lg bg-black bg-opacity-40"
+    >
       <SidebarContent className="py-6">
-        <SidebarTrigger className="mb-8 self-end" />
+        <SidebarTrigger className="mb-8 self-end hover:text-halo-accent transition-colors" />
         <SidebarMenu>
           {devices.map((device) => (
-            <SidebarMenuItem key={device.id}>
+            <SidebarMenuItem key={device.id} className="relative">
+              {currentDevice === device.id && (
+                <div className="absolute left-0 top-0 w-1 h-full bg-halo-accent rounded-r-md glow-effect"></div>
+              )}
               <SidebarMenuButton
-                className={`w-full ${currentDevice === device.id ? 'bg-halo-accent bg-opacity-20 text-halo-accent' : ''}`}
+                className={`w-full transition-all duration-300 hover:scale-105 group ${
+                  currentDevice === device.id 
+                    ? 'bg-halo-darker bg-opacity-70 text-halo-accent' 
+                    : 'hover:bg-halo-darker hover:bg-opacity-40'
+                }`}
                 onClick={() => onDeviceChange(device.id)}
                 tooltip={isCollapsed ? device.label : undefined}
               >
-                <device.icon className="h-5 w-5" />
+                <device.icon className={`h-5 w-5 transition-all duration-300 ${
+                  currentDevice === device.id 
+                    ? 'text-halo-accent' 
+                    : 'group-hover:text-halo-accent'
+                }`} />
                 {!isCollapsed && (
-                  <span className="ml-2">{device.label}</span>
+                  <span className={`ml-2 transition-all duration-300 ${
+                    currentDevice === device.id 
+                      ? 'text-halo-accent font-medium' 
+                      : ''
+                  }`}>{device.label}</span>
+                )}
+                {currentDevice === device.id && (
+                  <div className="absolute inset-0 rounded-md border border-halo-accent border-opacity-20 pointer-events-none"></div>
                 )}
               </SidebarMenuButton>
             </SidebarMenuItem>

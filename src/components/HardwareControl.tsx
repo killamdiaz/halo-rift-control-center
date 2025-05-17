@@ -146,68 +146,70 @@ const HardwareControl: React.FC<HardwareControlProps> = ({ deviceType = 'shoe' }
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden py-6">
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden p-6">
       {/* Background grid effect */}
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       
       {/* Device image container with responsive sizing */}
-      <div className="relative w-full max-w-4xl mx-auto px-4 flex justify-center">
-        <div className="relative w-full max-w-lg">
+      <div className="relative w-full h-full flex items-center justify-center">
+        <div className="relative max-w-4xl w-full h-full flex items-center justify-center">
           {/* Responsive image container */}
-          <div className="relative w-full">
-            <img 
-              src={imagePath} 
-              alt={`HALO ${deviceType}`} 
-              className="w-auto h-auto max-h-[90vh] object-contain mx-auto"
-              style={{ maxWidth: '100%' }}
-            />
+          <div className="relative flex items-center justify-center w-full h-full">
+            <div className="relative" style={{ maxHeight: '90vh' }}>
+              <img 
+                src={imagePath} 
+                alt={`HALO ${deviceType}`} 
+                className="object-contain max-h-[90vh] transition-opacity duration-300 ease-in-out"
+                style={{ maxWidth: '100%', height: 'auto' }}
+              />
 
-            {/* Hotspots positioned relative to the image container */}
-            {hotspots.map((hotspot) => (
-              <React.Fragment key={hotspot.id}>
-                {/* Connection line */}
-                {hotspot.linePosition && (
+              {/* Hotspots positioned relative to the image container */}
+              {hotspots.map((hotspot) => (
+                <React.Fragment key={hotspot.id}>
+                  {/* Connection line */}
+                  {hotspot.linePosition && (
+                    <div
+                      className="hotspot-line"
+                      style={{
+                        top: hotspot.linePosition.top,
+                        left: hotspot.linePosition.left,
+                        width: hotspot.linePosition.length,
+                        transform: `rotate(${hotspot.linePosition.angle})`,
+                        opacity: activeHotspot === hotspot.id ? 1 : 0.5,
+                        transition: 'all 0.3s ease'
+                      }}
+                    />
+                  )}
+                  
+                  {/* Hotspot button */}
                   <div
-                    className="hotspot-line"
+                    className={`hotspot ${activeHotspot === hotspot.id ? 'scale-110 bg-opacity-40' : ''}`}
                     style={{
-                      top: hotspot.linePosition.top,
-                      left: hotspot.linePosition.left,
-                      width: hotspot.linePosition.length,
-                      transform: `rotate(${hotspot.linePosition.angle})`,
-                      opacity: activeHotspot === hotspot.id ? 1 : 0.5,
+                      top: hotspot.position.top,
+                      left: hotspot.position.left
+                    }}
+                    onClick={() => toggleHotspot(hotspot.id)}
+                  >
+                    <span className="sr-only">{hotspot.label}</span>
+                  </div>
+
+                  {/* Hotspot label */}
+                  <div
+                    className="absolute flex flex-col items-center whitespace-nowrap"
+                    style={{
+                      top: `calc(${hotspot.position.top} - 30px)`,
+                      left: hotspot.position.left,
+                      transform: 'translateX(-50%)',
+                      opacity: activeHotspot === hotspot.id ? 1 : 0.7,
                       transition: 'all 0.3s ease'
                     }}
-                  />
-                )}
-                
-                {/* Hotspot button */}
-                <div
-                  className={`hotspot ${activeHotspot === hotspot.id ? 'scale-110 bg-opacity-40' : ''}`}
-                  style={{
-                    top: hotspot.position.top,
-                    left: hotspot.position.left
-                  }}
-                  onClick={() => toggleHotspot(hotspot.id)}
-                >
-                  <span className="sr-only">{hotspot.label}</span>
-                </div>
-
-                {/* Hotspot label */}
-                <div
-                  className="absolute flex flex-col items-center whitespace-nowrap"
-                  style={{
-                    top: `calc(${hotspot.position.top} - 30px)`,
-                    left: hotspot.position.left,
-                    transform: 'translateX(-50%)',
-                    opacity: activeHotspot === hotspot.id ? 1 : 0.7,
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  <span className="neon-text font-bold text-sm">{hotspot.label}</span>
-                  <span className="text-white text-xs opacity-80">{hotspot.sublabel}</span>
-                </div>
-              </React.Fragment>
-            ))}
+                  >
+                    <span className="neon-text font-bold text-sm">{hotspot.label}</span>
+                    <span className="text-white text-xs opacity-80">{hotspot.sublabel}</span>
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
           </div>
         </div>
       </div>
