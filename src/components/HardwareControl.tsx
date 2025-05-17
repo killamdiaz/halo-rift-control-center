@@ -5,11 +5,12 @@ import MCUSettings from './settings/MCUSettings';
 import BatterySettings from './settings/BatterySettings';
 import GunSettings from './settings/GunSettings';
 import SuitSettings from './settings/SuitSettings';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
-// Placeholder image paths
-const shoePath = '/lovable-uploads/8d627895-211e-4178-b05a-5320f5a5b192.png';
-const gunPath = '/lovable-uploads/633e272a-0cda-4241-98d9-8cf940bdbd1a.png';
-const suitPath = '/lovable-uploads/914d44f7-0a8f-4855-9c6f-78b52b09c399.png';
+// New bg-removed image paths
+const shoePath = '/lovable-uploads/47ba7ad1-45f4-455c-a117-0fc8c8dfb9c4.png';
+const gunPath = '/lovable-uploads/11858e66-a4f4-46cb-9343-7f171eb41af9.png';
+const suitPath = '/lovable-uploads/76c2f682-3b6b-434d-b819-e810ec01daff.png';
 
 interface HardwareControlProps {
   deviceType: string;
@@ -145,65 +146,69 @@ const HardwareControl: React.FC<HardwareControlProps> = ({ deviceType = 'shoe' }
   };
 
   return (
-    <div className="relative w-full h-screen pt-16 flex items-center justify-center overflow-hidden">
+    <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden py-6">
       {/* Background grid effect */}
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       
-      <div className="relative max-w-3xl mx-auto">
-        {/* Main hardware image */}
-        <div className="relative mx-auto max-w-lg">
-          <img 
-            src={imagePath} 
-            alt={`HALO ${deviceType}`} 
-            className="w-full h-auto object-contain"
-          />
+      {/* Device image container with responsive sizing */}
+      <div className="relative w-full max-w-4xl mx-auto px-4 flex justify-center">
+        <div className="relative w-full max-w-lg">
+          {/* Responsive image container */}
+          <div className="relative w-full">
+            <img 
+              src={imagePath} 
+              alt={`HALO ${deviceType}`} 
+              className="w-auto h-auto max-h-[90vh] object-contain mx-auto"
+              style={{ maxWidth: '100%' }}
+            />
 
-          {/* Hotspots */}
-          {hotspots.map((hotspot) => (
-            <React.Fragment key={hotspot.id}>
-              {/* Connection line */}
-              {hotspot.linePosition && (
+            {/* Hotspots positioned relative to the image container */}
+            {hotspots.map((hotspot) => (
+              <React.Fragment key={hotspot.id}>
+                {/* Connection line */}
+                {hotspot.linePosition && (
+                  <div
+                    className="hotspot-line"
+                    style={{
+                      top: hotspot.linePosition.top,
+                      left: hotspot.linePosition.left,
+                      width: hotspot.linePosition.length,
+                      transform: `rotate(${hotspot.linePosition.angle})`,
+                      opacity: activeHotspot === hotspot.id ? 1 : 0.5,
+                      transition: 'all 0.3s ease'
+                    }}
+                  />
+                )}
+                
+                {/* Hotspot button */}
                 <div
-                  className="hotspot-line"
+                  className={`hotspot ${activeHotspot === hotspot.id ? 'scale-110 bg-opacity-40' : ''}`}
                   style={{
-                    top: hotspot.linePosition.top,
-                    left: hotspot.linePosition.left,
-                    width: hotspot.linePosition.length,
-                    transform: `rotate(${hotspot.linePosition.angle})`,
-                    opacity: activeHotspot === hotspot.id ? 1 : 0.5,
+                    top: hotspot.position.top,
+                    left: hotspot.position.left
+                  }}
+                  onClick={() => toggleHotspot(hotspot.id)}
+                >
+                  <span className="sr-only">{hotspot.label}</span>
+                </div>
+
+                {/* Hotspot label */}
+                <div
+                  className="absolute flex flex-col items-center whitespace-nowrap"
+                  style={{
+                    top: `calc(${hotspot.position.top} - 30px)`,
+                    left: hotspot.position.left,
+                    transform: 'translateX(-50%)',
+                    opacity: activeHotspot === hotspot.id ? 1 : 0.7,
                     transition: 'all 0.3s ease'
                   }}
-                />
-              )}
-              
-              {/* Hotspot button */}
-              <div
-                className={`hotspot ${activeHotspot === hotspot.id ? 'scale-110 bg-opacity-40' : ''}`}
-                style={{
-                  top: hotspot.position.top,
-                  left: hotspot.position.left
-                }}
-                onClick={() => toggleHotspot(hotspot.id)}
-              >
-                <span className="sr-only">{hotspot.label}</span>
-              </div>
-
-              {/* Hotspot label */}
-              <div
-                className="absolute flex flex-col items-center whitespace-nowrap"
-                style={{
-                  top: `calc(${hotspot.position.top} - 30px)`,
-                  left: hotspot.position.left,
-                  transform: 'translateX(-50%)',
-                  opacity: activeHotspot === hotspot.id ? 1 : 0.7,
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                <span className="neon-text font-bold text-sm">{hotspot.label}</span>
-                <span className="text-white text-xs opacity-80">{hotspot.sublabel}</span>
-              </div>
-            </React.Fragment>
-          ))}
+                >
+                  <span className="neon-text font-bold text-sm">{hotspot.label}</span>
+                  <span className="text-white text-xs opacity-80">{hotspot.sublabel}</span>
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       </div>
 
