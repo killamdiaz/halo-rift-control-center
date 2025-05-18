@@ -5,7 +5,7 @@ import MCUSettings from './settings/MCUSettings';
 import BatterySettings from './settings/BatterySettings';
 import GunSettings from './settings/GunSettings';
 import SuitSettings from './settings/SuitSettings';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
+import DiagnosticsPanel from './DiagnosticsPanel';
 
 // New bg-removed image paths
 const shoePath = '/lovable-uploads/47ba7ad1-45f4-455c-a117-0fc8c8dfb9c4.png';
@@ -146,20 +146,20 @@ const HardwareControl: React.FC<HardwareControlProps> = ({ deviceType = 'shoe' }
   };
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center overflow-hidden p-6">
+    <div className="relative w-full h-full flex flex-col items-center overflow-hidden p-6">
       {/* Background grid effect */}
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       
       {/* Device image container with responsive sizing */}
-      <div className="relative w-full h-full flex items-center justify-center">
+      <div className="relative w-full flex-1 flex items-center justify-center mb-4">
         <div className="relative max-w-4xl w-full h-full flex items-center justify-center">
           {/* Responsive image container */}
           <div className="relative flex items-center justify-center w-full h-full">
-            <div className="relative" style={{ maxHeight: '90vh' }}>
+            <div className="relative" style={{ maxHeight: '70vh' }}>
               <img 
                 src={imagePath} 
                 alt={`HALO ${deviceType}`} 
-                className="object-contain max-h-[90vh] transition-opacity duration-300 ease-in-out"
+                className="object-contain max-h-[70vh] transition-opacity duration-300 ease-in-out"
                 style={{ maxWidth: '100%', height: 'auto' }}
               />
 
@@ -213,6 +213,9 @@ const HardwareControl: React.FC<HardwareControlProps> = ({ deviceType = 'shoe' }
           </div>
         </div>
       </div>
+
+      {/* Diagnostics Panel */}
+      <DiagnosticsPanel />
 
       {/* Settings panels */}
       {renderSettingsPanel()}
