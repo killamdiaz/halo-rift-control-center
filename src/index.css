@@ -115,7 +115,7 @@
   
   .neon-text {
     @apply text-halo-accent font-medium tracking-wide;
-    text-shadow: 0 0 5px rgba(0, 204, 255, 0.7);
+    text-shadow: 0 0 5px rgba(0, 204, 255, 0.7), 0 0 10px rgba(0, 204, 255, 0.3);
   }
 
   .neon-border {
@@ -136,6 +136,11 @@
   .glow-effect {
     box-shadow: 0 0 10px rgba(0, 204, 255, 0.7);
   }
+  
+  /* Glass effect */
+  .glassmorphism {
+    @apply backdrop-blur-lg bg-black bg-opacity-40 border border-halo-accent border-opacity-20;
+  }
 
   /* Radar animation */
   .radar-sweep {
@@ -154,7 +159,7 @@
   
   /* Keyboard specific styles */
   .keyboard-key {
-    @apply w-10 h-10 rounded bg-black bg-opacity-60 border border-white border-opacity-30
+    @apply w-full h-10 rounded bg-black bg-opacity-60 border border-white border-opacity-30
            flex items-center justify-center transition-all duration-300
            hover:border-halo-accent hover:border-opacity-70 hover:bg-halo-accent hover:bg-opacity-20;
   }
@@ -179,6 +184,15 @@
     100% {
       box-shadow: 0 0 0 0 rgba(0, 204, 255, 0);
     }
+  }
+
+  /* Device images centered and responsive */
+  .device-image-container {
+    @apply flex justify-center items-center h-full w-full overflow-hidden pt-20 pb-10 px-10;
+  }
+  
+  .device-image {
+    @apply max-h-[90vh] w-auto h-auto max-w-full object-contain;
   }
 }
 
@@ -215,7 +229,28 @@
   background: linear-gradient(135deg, #0a0a0a 0%, #121212 100%);
 }
 
-/* Improved glass effect for sidebar and panels */
-.glassmorphism {
-  @apply backdrop-blur-lg bg-black bg-opacity-40 border border-halo-accent border-opacity-20;
+/* Login screen specific styles */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a0a0a 0%, #121212 100%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 204, 255, 0.3);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.auth-input {
+  width: 100%;
+  background: #191919;
+  border: 1px solid rgba(0, 204, 255, 0.3);
+  color: white;
 }

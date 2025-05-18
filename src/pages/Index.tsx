@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import HardwareControl from '@/components/HardwareControl';
 import { SidebarProvider } from '@/components/ui/sidebar';
@@ -10,6 +11,7 @@ import TestModePanel from '@/components/TestModePanel';
 import StatsPanel from '@/components/StatsPanel';
 
 const Index = () => {
+  const navigate = useNavigate();
   const [currentDevice, setCurrentDevice] = useState('shoe');
   const [isAddDeviceModalOpen, setIsAddDeviceModalOpen] = useState(false);
   
@@ -34,7 +36,9 @@ const Index = () => {
         />
         <div className="flex-1 flex flex-col">
           <Navbar onAddDeviceClick={() => setIsAddDeviceModalOpen(true)} />
-          {renderContent()}
+          <div className="mt-16">
+            {renderContent()}
+          </div>
         </div>
         
         {/* Right stats sidebar - only show when viewing hardware device */}
