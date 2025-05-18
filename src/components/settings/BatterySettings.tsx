@@ -13,7 +13,7 @@ const BatterySettings: React.FC<BatterySettingsProps> = ({ onClose }) => {
   const [batteryLevel] = useState(75);
   
   return (
-    <div className="setting-panel bottom-1/4 left-1/2 transform -translate-x-1/2 w-80">
+    <div className="setting-panel bottom-1/4 left-1/2 transform -translate-x-1/2 w-80 z-[100]">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-bold neon-text">Battery Settings</h3>
         <button 

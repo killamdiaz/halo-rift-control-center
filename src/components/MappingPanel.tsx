@@ -34,7 +34,7 @@ const MappingPanel: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full h-full p-6 overflow-auto">
+    <div className="flex flex-col items-center w-full h-full p-6 overflow-auto mt-16">
       <h2 className="text-2xl font-bold text-center text-halo-accent mb-6 tracking-wider neon-text">
         HALO CONTROL MAPPING
       </h2>
@@ -53,21 +53,25 @@ const MappingPanel: React.FC = () => {
       <div className="relative w-full max-w-4xl h-64 mb-12 flex justify-center">
         {mappingMode === 'keyboard' ? (
           <div className="keyboard-container relative w-full h-full border border-halo-accent border-opacity-30 rounded-lg bg-black bg-opacity-40 backdrop-blur-sm">
-            {/* Keyboard layout visualization */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 grid grid-cols-12 gap-1 w-4/5">
-              {/* Function keys */}
-              {Array.from({ length: 12 }, (_, i) => (
-                <div key={`f${i+1}`} className="w-8 h-8 rounded bg-black border border-white border-opacity-20 text-xs flex items-center justify-center text-white">
-                  F{i+1}
-                </div>
-              ))}
+            {/* Standard keyboard layout */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 grid grid-rows-5 gap-1 w-4/5">
+              {/* Function keys row */}
+              <div className="grid grid-cols-12 gap-1">
+                {Array.from({ length: 12 }, (_, i) => (
+                  <div key={`f${i+1}`} className="w-8 h-8 rounded bg-black border border-white border-opacity-20 text-xs flex items-center justify-center text-white">
+                    F{i+1}
+                  </div>
+                ))}
+              </div>
               
-              {/* Main keyboard */}
-              <div className="col-span-12 grid grid-cols-15 gap-1 mt-2">
-                {["Esc", "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "⌫"].map((key) => (
+              {/* Number row */}
+              <div className="grid grid-cols-13 gap-1 mt-1">
+                {["Esc", "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "⌫"].map((key, index) => (
                   <div 
-                    key={key} 
-                    className="w-8 h-8 rounded bg-black border border-white border-opacity-20 text-xs flex items-center justify-center text-white hover:border-halo-accent hover:text-halo-accent transition-colors cursor-pointer"
+                    key={`num-${key}-${index}`} 
+                    className={`w-8 h-8 rounded bg-black border border-white border-opacity-20 text-xs flex items-center justify-center text-white hover:border-halo-accent hover:text-halo-accent transition-colors cursor-pointer ${
+                      index === 14 ? "col-span-2" : ""
+                    }`}
                   >
                     {key}
                   </div>
@@ -75,13 +79,13 @@ const MappingPanel: React.FC = () => {
               </div>
 
               {/* QWERTY row */}
-              <div className="col-span-12 grid grid-cols-15 gap-1 mt-1">
-                {["Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\", "Del"].map((key) => (
+              <div className="grid grid-cols-13 gap-1 mt-1">
+                {["Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"].map((key) => (
                   <div 
-                    key={key} 
+                    key={`qwerty-${key}`} 
                     className={`w-8 h-8 rounded border text-xs flex items-center justify-center cursor-pointer transition-all ${
                       key === 'W' ? 'bg-halo-accent bg-opacity-30 border-halo-accent text-white glow-effect' : 'bg-black border-white border-opacity-20 text-white hover:border-halo-accent hover:text-halo-accent'
-                    }`}
+                    } ${key === 'Tab' ? 'col-span-1.5' : ''}`}
                   >
                     {key}
                   </div>
@@ -89,44 +93,40 @@ const MappingPanel: React.FC = () => {
               </div>
 
               {/* ASDF row */}
-              <div className="col-span-12 grid grid-cols-15 gap-1 mt-1">
-                {["Caps", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "Enter", "Enter", "PgUp"].map((key, idx) => (
+              <div className="grid grid-cols-13 gap-1 mt-1">
+                {["Caps", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "Enter"].map((key, idx) => (
                   <div 
-                    key={`${key}-${idx}`} 
+                    key={`asdf-${key}-${idx}`} 
                     className={`w-8 h-8 rounded border text-xs flex items-center justify-center cursor-pointer transition-all ${
                       key === 'A' || key === 'S' || key === 'D' ? 'bg-halo-accent bg-opacity-30 border-halo-accent text-white glow-effect' : 'bg-black border-white border-opacity-20 text-white hover:border-halo-accent hover:text-halo-accent'
-                    } ${key === 'Enter' && idx === 13 ? 'col-span-2' : ''}`}
+                    } ${key === 'Caps' ? 'col-span-1.5' : ''} ${key === 'Enter' ? 'col-span-1.5' : ''}`}
                   >
                     {key}
                   </div>
                 ))}
               </div>
 
-              {/* ZXCV row */}
-              <div className="col-span-12 grid grid-cols-15 gap-1 mt-1">
-                {["Shift", "Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "Shift", "↑", "PgDn"].map((key, idx) => (
+              {/* ZXCV row + spacebar row */}
+              <div className="grid grid-cols-13 gap-1 mt-1">
+                {["Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "Shift", "↑"].map((key, idx) => (
                   <div 
-                    key={`${key}-${idx}`}
+                    key={`zxcv-${key}-${idx}`}
                     className={`w-8 h-8 rounded border text-xs flex items-center justify-center cursor-pointer transition-all ${
-                      key === 'Shift' && idx === 0 ? 'col-span-2' : ''
-                    } ${
                       key === 'Shift' ? 'bg-halo-accent bg-opacity-30 border-halo-accent text-white glow-effect' : 'bg-black border-white border-opacity-20 text-white hover:border-halo-accent hover:text-halo-accent'
-                    }`}
+                    } ${key === 'Shift' && idx === 0 ? 'col-span-1.5' : ''} ${key === 'Shift' && idx === 11 ? 'col-span-1.5' : ''}`}
                   >
                     {key}
                   </div>
                 ))}
               </div>
-
-              {/* Spacebar row */}
-              <div className="col-span-12 grid grid-cols-15 gap-1 mt-1">
-                {["Ctrl", "Win", "Alt", "Space", "Space", "Space", "Space", "Space", "Space", "Alt", "Fn", "Menu", "Ctrl", "←", "↓", "→"].map((key, idx) => (
+              
+              {/* Bottom row with space */}
+              <div className="grid grid-cols-13 gap-1 mt-1">
+                {["Ctrl", "Win", "Alt", "Space", "Alt", "Fn", "Ctrl", "←", "↓", "→"].map((key) => (
                   <div 
-                    key={`${key}-${idx}`}
+                    key={`bottom-${key}`}
                     className={`w-8 h-8 rounded border text-xs flex items-center justify-center cursor-pointer transition-all ${
-                      key === 'Space' ? 'col-span-1' : ''
-                    } ${
-                      key === 'Space' ? 'bg-halo-accent bg-opacity-30 border-halo-accent text-white glow-effect' : 'bg-black border-white border-opacity-20 text-white hover:border-halo-accent hover:text-halo-accent'
+                      key === 'Space' ? 'col-span-5 bg-halo-accent bg-opacity-30 border-halo-accent text-white glow-effect' : 'bg-black border-white border-opacity-20 text-white hover:border-halo-accent hover:text-halo-accent'
                     }`}
                   >
                     {key === 'Space' ? '' : key}

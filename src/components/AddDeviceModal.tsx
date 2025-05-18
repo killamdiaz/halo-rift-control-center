@@ -98,8 +98,6 @@ const AddDeviceModal: React.FC<AddDeviceModalProps> = ({ open, onOpenChange }) =
               <div className="radar-circle absolute inset-8 rounded-full border border-halo-accent border-opacity-20"></div>
               <div className="radar-circle absolute inset-16 rounded-full border border-halo-accent border-opacity-20"></div>
               <div className="radar-circle absolute inset-24 rounded-full border border-halo-accent border-opacity-20"></div>
-              <div className="radar-line absolute top-1/2 left-1/2 h-px bg-halo-accent w-1/2 origin-left"></div>
-              <div className="radar-line absolute top-1/2 left-1/2 h-px bg-halo-accent w-1/2 origin-left" style={{ transform: 'rotate(90deg)' }}></div>
             </div>
             {isScanning && (
               <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
