@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,10 +7,12 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
+import { AuthContext } from '../App';
 
 const Auth: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
   
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,6 +21,7 @@ const Auth: React.FC = () => {
     // Simulate login
     setTimeout(() => {
       setLoading(false);
+      login();
       toast({
         title: "Login successful",
         description: "Welcome to HALO OS",
@@ -33,6 +36,7 @@ const Auth: React.FC = () => {
     // Simulate Google login
     setTimeout(() => {
       setLoading(false);
+      login();
       toast({
         title: "Google login successful",
         description: "Welcome to HALO OS",
@@ -48,6 +52,7 @@ const Auth: React.FC = () => {
     // Simulate sign up
     setTimeout(() => {
       setLoading(false);
+      login();
       toast({
         title: "Account created",
         description: "Welcome to HALO OS",

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Plus, User, LogOut, Settings } from 'lucide-react';
 import { 
   Popover, 
@@ -7,6 +7,9 @@ import {
   PopoverTrigger 
 } from "@/components/ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../App';
+import { toast } from '@/hooks/use-toast';
 
 interface NavbarProps {
   onAddDeviceClick: () => void;
@@ -14,6 +17,18 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onAddDeviceClick }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    setIsUserMenuOpen(false);
+    toast({
+      title: "Logged out successfully",
+      description: "See you soon!",
+    });
+    navigate('/login');
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 h-16 px-6 flex items-center justify-between bg-black bg-opacity-50 backdrop-blur-md border-b border-halo-accent border-opacity-20">
@@ -59,6 +74,7 @@ const Navbar: React.FC<NavbarProps> = ({ onAddDeviceClick }) => {
               </button>
               <button 
                 className="w-full flex items-center space-x-3 p-2 rounded-md hover:bg-halo-accent hover:bg-opacity-10 text-left transition-colors"
+                onClick={handleLogout}
               >
                 <LogOut size={18} className="text-halo-accent" />
                 <span>Logout</span>
