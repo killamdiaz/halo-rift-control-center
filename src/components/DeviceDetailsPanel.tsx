@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { X, Save, Wifi, Battery, Clock, Hash, Globe, Chip } from 'lucide-react';
+import { X, Save, Wifi, Battery, Clock, Hash, Globe, Cpu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -111,7 +110,7 @@ const DeviceDetailsPanel: React.FC<DeviceDetailsProps> = ({
               {/* Role & Type */}
               <div className="flex items-center justify-between p-3 bg-halo-darker bg-opacity-20 rounded-lg">
                 <div className="flex items-center">
-                  <Chip className="w-5 h-5 mr-3 text-halo-accent" />
+                  <Cpu className="w-5 h-5 mr-3 text-halo-accent" />
                   <span className="text-white">Role</span>
                 </div>
                 <span className="text-halo-accent font-medium">{device.role}</span>
