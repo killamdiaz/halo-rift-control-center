@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Footprints, Gamepad2, ShirtIcon, Keyboard, TestTube } from 'lucide-react';
+import { Footprints, Gamepad2, ShirtIcon, Keyboard, TestTube, Settings } from 'lucide-react';
 import { 
   Sidebar, 
   SidebarContent, 
@@ -27,6 +27,7 @@ const DeviceSidebar: React.FC<DeviceSidebarProps> = ({
     { id: 'shoe', label: 'Shoe', icon: Footprints },
     { id: 'gun', label: 'Gun', icon: Gamepad2 },
     { id: 'suit', label: 'Suit', icon: ShirtIcon },
+    { id: 'devices', label: 'Devices', icon: Settings },
     { id: 'mapping', label: 'Mapping', icon: Keyboard },
     { id: 'test', label: 'Test Mode', icon: TestTube }
   ];

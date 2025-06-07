@@ -4,7 +4,8 @@ import Navbar from '@/components/Navbar';
 import HardwareControl from '@/components/HardwareControl';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import DeviceSidebar from '@/components/DeviceSidebar';
-import AddDeviceModal from '@/components/AddDeviceModal';
+import EnhancedAddDeviceModal from '@/components/EnhancedAddDeviceModal';
+import PairedDevicesManager from '@/components/PairedDevicesManager';
 import MappingPanel from '@/components/MappingPanel';
 import TestModePanel from '@/components/TestModePanel';
 import StatsPanel from '@/components/StatsPanel';
@@ -20,6 +21,8 @@ const Index = () => {
         return <MappingPanel />;
       case 'test':
         return <TestModePanel />;
+      case 'devices':
+        return <PairedDevicesManager />;
       default:
         return <HardwareControl deviceType={currentDevice} />;
     }
@@ -42,7 +45,7 @@ const Index = () => {
           <StatsPanel deviceType={currentDevice} />
         )}
         
-        <AddDeviceModal 
+        <EnhancedAddDeviceModal 
           open={isAddDeviceModalOpen} 
           onOpenChange={setIsAddDeviceModalOpen} 
         />
