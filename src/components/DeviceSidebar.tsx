@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   LayoutDashboard,
@@ -21,8 +22,8 @@ interface DeviceSidebarProps {
   onDeviceChange: (device: string) => void;
 }
 
-export function DeviceSidebar({ currentDevice, onDeviceChange }: DeviceSidebarProps) {
-  const { state, toggleSidebar } = useSidebar();
+export default function DeviceSidebar({ currentDevice, onDeviceChange }: DeviceSidebarProps) {
+  const { state } = useSidebar();
   
   const deviceItems = [
     {
@@ -82,7 +83,7 @@ export function DeviceSidebar({ currentDevice, onDeviceChange }: DeviceSidebarPr
   ];
 
   return (
-    <aside className={`bg-black bg-opacity-40 backdrop-blur-lg border-r border-halo-accent border-opacity-20 w-64 flex-shrink-0 ${state.isOpen ? 'block' : 'hidden'} md:block`}>
+    <aside className={`bg-black bg-opacity-40 backdrop-blur-lg border-r border-halo-accent border-opacity-20 w-64 flex-shrink-0 ${state === 'expanded' ? 'block' : 'hidden'} md:block`}>
       <ScrollArea className="py-4 h-full">
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
