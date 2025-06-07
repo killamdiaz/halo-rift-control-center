@@ -7,8 +7,15 @@ import { Badge } from '@/components/ui/badge';
 
 type PerformanceMode = 'warp' | 'halo-pro';
 
-const PerformanceModeToggle: React.FC = () => {
-  const [currentMode, setCurrentMode] = useState<PerformanceMode>('warp');
+interface PerformanceModeToggleProps {
+  currentMode: PerformanceMode;
+  onModeChange: (mode: PerformanceMode) => void;
+}
+
+const PerformanceModeToggle: React.FC<PerformanceModeToggleProps> = ({ 
+  currentMode, 
+  onModeChange 
+}) => {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const modes = {
@@ -39,7 +46,7 @@ const PerformanceModeToggle: React.FC = () => {
     
     // Simulate mode switch delay
     setTimeout(() => {
-      setCurrentMode(mode);
+      onModeChange(mode);
       setIsTransitioning(false);
     }, 1500);
   };

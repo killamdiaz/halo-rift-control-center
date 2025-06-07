@@ -6,7 +6,6 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import DeviceSidebar from '@/components/DeviceSidebar';
 import EnhancedAddDeviceModal from '@/components/EnhancedAddDeviceModal';
 import PairedDevicesManager from '@/components/PairedDevicesManager';
-import MappingPanel from '@/components/MappingPanel';
 import TestModePanel from '@/components/TestModePanel';
 import StatsPanel from '@/components/StatsPanel';
 import FirmwareUpdatePanel from '@/components/FirmwareUpdatePanel';
@@ -18,6 +17,7 @@ import PerformanceModeToggle from '@/components/PerformanceModeToggle';
 const Index = () => {
   const [currentDevice, setCurrentDevice] = useState('shoe');
   const [isAddDeviceModalOpen, setIsAddDeviceModalOpen] = useState(false);
+  const [currentMode, setCurrentMode] = useState<'warp' | 'halo-pro'>('warp');
   
   // Mock firmware updates data
   const firmwareUpdates = [
@@ -44,12 +44,6 @@ const Index = () => {
     const baseClasses = showRightSidebar ? '' : 'px-6 py-6';
     
     switch(currentDevice) {
-      case 'mapping':
-        return (
-          <div className={baseClasses}>
-            <MappingPanel />
-          </div>
-        );
       case 'test':
         return (
           <div className={baseClasses}>
@@ -79,7 +73,7 @@ const Index = () => {
       case 'settings':
         return (
           <div className={baseClasses}>
-            <PerformanceModeToggle />
+            <PerformanceModeToggle currentMode={currentMode} onModeChange={setCurrentMode} />
           </div>
         );
       default:
@@ -93,9 +87,13 @@ const Index = () => {
         <DeviceSidebar 
           currentDevice={currentDevice}
           onDeviceChange={setCurrentDevice}
+          currentMode={currentMode}
         />
         <div className="flex-1 flex flex-col">
-          <Navbar onAddDeviceClick={() => setIsAddDeviceModalOpen(true)} />
+          <Navbar 
+            onAddDeviceClick={() => setIsAddDeviceModalOpen(true)} 
+            showRightSidebar={showRightSidebar}
+          />
           {renderContent()}
         </div>
         

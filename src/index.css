@@ -99,7 +99,7 @@
   .hotspot {
     @apply absolute flex items-center justify-center w-12 h-12 rounded-full 
            bg-halo-accent bg-opacity-20 border border-halo-accent cursor-pointer
-           backdrop-blur-sm transition-all duration-300 animate-wave-pulse
+           backdrop-blur-sm transition-all duration-300 animate-soft-wave-pulse
            hover:bg-opacity-40 hover:scale-110 z-10;
   }
 
@@ -164,27 +164,31 @@
     box-shadow: 0 0 8px rgba(0, 204, 255, 0.7), inset 0 0 5px rgba(0, 204, 255, 0.3);
   }
   
-  /* New wave pulse animation for hotspots */
-  .animate-wave-pulse {
-    animation: wave-pulse 4s infinite ease-in-out;
+  /* Soft wave pulse animation for hotspots */
+  .animate-soft-wave-pulse {
+    animation: soft-wave-pulse 8s infinite ease-in-out;
   }
   
-  @keyframes wave-pulse {
+  @keyframes soft-wave-pulse {
     0%, 100% {
-      box-shadow: 0 0 0 0 rgba(0, 204, 255, 0.7);
+      box-shadow: 0 0 0 0 rgba(0, 204, 255, 0.3);
       transform: scale(1);
+      opacity: 0.7;
     }
     25% {
-      box-shadow: 0 0 0 10px rgba(0, 204, 255, 0.3);
-      transform: scale(1.05);
+      box-shadow: 0 0 0 15px rgba(0, 204, 255, 0.15);
+      transform: scale(1.02);
+      opacity: 0.8;
     }
     50% {
-      box-shadow: 0 0 0 20px rgba(0, 204, 255, 0.1);
-      transform: scale(1.1);
+      box-shadow: 0 0 0 30px rgba(0, 204, 255, 0.05);
+      transform: scale(1.05);
+      opacity: 0.9;
     }
     75% {
-      box-shadow: 0 0 0 10px rgba(0, 204, 255, 0.3);
-      transform: scale(1.05);
+      box-shadow: 0 0 0 15px rgba(0, 204, 255, 0.15);
+      transform: scale(1.02);
+      opacity: 0.8;
     }
   }
 }

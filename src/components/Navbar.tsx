@@ -15,18 +15,19 @@ import DeviceAlertsSystem from './DeviceAlertsSystem';
 
 interface NavbarProps {
   onAddDeviceClick: () => void;
+  showRightSidebar?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onAddDeviceClick }) => {
+const Navbar: React.FC<NavbarProps> = ({ onAddDeviceClick, showRightSidebar = false }) => {
   const { logout } = useContext(AuthContext);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-black bg-opacity-50 backdrop-blur-lg border-b border-halo-accent border-opacity-20 px-6 py-4">
+    <nav className={`bg-black bg-opacity-50 backdrop-blur-lg border-b border-halo-accent border-opacity-20 px-6 py-4 ${showRightSidebar ? '' : 'w-full'}`}>
       <div className="flex items-center justify-between">
         {/* Left side - Title only */}
         <div className="flex items-center">
-          <h1 className="text-xl font-bold text-halo-accent">HALO OS</h1>
+          <h1 className="text-xl font-bold text-blue-400">HALO OS</h1>
         </div>
 
         {/* Right side - Device Alerts, Add Device, and User Menu */}
