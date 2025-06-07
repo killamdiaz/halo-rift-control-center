@@ -1,74 +1,120 @@
-
 import React from 'react';
-import { Footprints, Gamepad2, ShirtIcon, Keyboard, TestTube, Settings } from 'lucide-react';
-import { 
-  Sidebar, 
-  SidebarContent, 
-  SidebarMenu, 
-  SidebarMenuButton, 
-  SidebarMenuItem,
-  SidebarTrigger,
-  useSidebar
-} from '@/components/ui/sidebar';
+import {
+  LayoutDashboard,
+  Settings,
+  Gamepad2,
+  Zap,
+  Activity,
+  BarChart3,
+  Settings2,
+  Footprints,
+  Target,
+  ShirtIcon
+} from 'lucide-react';
+import { NavItem } from "@/components/ui/nav-item"
+import { Separator } from "@/components/ui/separator"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { useSidebar } from "@/components/ui/sidebar"
 
 interface DeviceSidebarProps {
   currentDevice: string;
   onDeviceChange: (device: string) => void;
 }
 
-const DeviceSidebar: React.FC<DeviceSidebarProps> = ({ 
-  currentDevice, 
-  onDeviceChange 
-}) => {
-  const { state } = useSidebar();
-  const isCollapsed = state === 'collapsed';
+export function DeviceSidebar({ currentDevice, onDeviceChange }: DeviceSidebarProps) {
+  const { state, toggleSidebar } = useSidebar();
+  
+  const deviceItems = [
+    {
+      title: "Left Shoe",
+      icon: Footprints,
+      id: "shoe",
+      isConnected: true,
+      battery: 85
+    },
+    {
+      title: "Primary Gun", 
+      icon: Target,
+      id: "gun",
+      isConnected: true,
+      battery: 92
+    },
+    {
+      title: "Tactical Suit",
+      icon: ShirtIcon, 
+      id: "suit",
+      isConnected: false,
+      battery: 15
+    }
+  ];
 
-  const devices = [
-    { id: 'shoe', label: 'Shoe', icon: Footprints },
-    { id: 'gun', label: 'Gun', icon: Gamepad2 },
-    { id: 'suit', label: 'Suit', icon: ShirtIcon },
-    { id: 'devices', label: 'Devices', icon: Settings },
-    { id: 'mapping', label: 'Mapping', icon: Keyboard },
-    { id: 'test', label: 'Test Mode', icon: TestTube }
+  const systemItems = [
+    {
+      title: "Paired Devices",
+      icon: Settings,
+      id: "devices"
+    },
+    {
+      title: "Control Mapping",
+      icon: Gamepad2,
+      id: "mapping"
+    },
+    {
+      title: "Test Mode",
+      icon: Zap,
+      id: "test"
+    },
+    {
+      title: "Diagnostics",
+      icon: Activity,
+      id: "diagnostics"
+    },
+    {
+      title: "Analytics",
+      icon: BarChart3,
+      id: "analytics"
+    },
+    {
+      title: "Performance",
+      icon: Settings2,
+      id: "settings"
+    }
   ];
 
   return (
-    <Sidebar 
-      variant="floating" 
-      className="border-r border-halo-accent border-opacity-20 backdrop-blur-lg bg-black bg-opacity-40"
-    >
-      <SidebarContent className="py-6">
-        <SidebarTrigger className="mb-8 self-end hover:text-halo-accent transition-colors" />
-        <SidebarMenu>
-          {devices.map((device) => (
-            <SidebarMenuItem key={device.id} className="relative mb-3">
-              {currentDevice === device.id && (
-                <div className="absolute left-0 top-0 w-1 h-full bg-halo-accent rounded-r-md glow-effect"></div>
-              )}
-              <SidebarMenuButton
-                className={`w-full h-12 flex items-center justify-center transition-all duration-300 hover:scale-110 group ${
-                  currentDevice === device.id 
-                    ? 'bg-halo-darker bg-opacity-70 text-halo-accent' 
-                    : 'hover:bg-halo-darker hover:bg-opacity-40'
-                }`}
-                onClick={() => onDeviceChange(device.id)}
-                tooltip={device.label}
-              >
-                <device.icon className={`h-6 w-6 transition-all duration-300 ${
-                  currentDevice === device.id 
-                    ? 'text-halo-accent' 
-                    : 'group-hover:text-halo-accent'
-                }`} />
-                {currentDevice === device.id && (
-                  <div className="absolute inset-0 rounded-md border border-halo-accent border-opacity-30 pointer-events-none glow-effect"></div>
-                )}
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+    <aside className={`bg-black bg-opacity-40 backdrop-blur-lg border-r border-halo-accent border-opacity-20 w-64 flex-shrink-0 ${state.isOpen ? 'block' : 'hidden'} md:block`}>
+      <ScrollArea className="py-4 h-full">
+        <div className="px-3 py-2">
+          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+            Devices
+          </h2>
+          {deviceItems.map((item) => (
+            <NavItem
+              key={item.id}
+              title={item.title}
+              icon={item.icon}
+              id={item.id}
+              active={currentDevice === item.id}
+              onNavChange={onDeviceChange}
+              alert={!item.isConnected || item.battery < 20}
+            />
           ))}
-        </SidebarMenu>
-      </SidebarContent>
-    </Sidebar>
+          <Separator className="my-4 bg-halo-accent bg-opacity-40" />
+          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+            System
+          </h2>
+          {systemItems.map((item) => (
+            <NavItem
+              key={item.id}
+              title={item.title}
+              icon={item.icon}
+              id={item.id}
+              active={currentDevice === item.id}
+              onNavChange={onDeviceChange}
+            />
+          ))}
+        </div>
+      </ScrollArea>
+    </aside>
   );
-};
-
-export default DeviceSidebar;
+}

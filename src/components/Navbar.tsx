@@ -1,87 +1,68 @@
-
-import React, { useState, useContext } from 'react';
-import { Plus, User, LogOut, Settings } from 'lucide-react';
-import { 
-  Popover, 
-  PopoverContent, 
-  PopoverTrigger 
-} from "@/components/ui/popover";
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../App';
-import { toast } from '@/hooks/use-toast';
+import React, { useContext, useState } from 'react';
+import { Plus, User, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { AuthContext } from '@/App';
+import DeviceAlertsSystem from './DeviceAlertsSystem';
 
 interface NavbarProps {
   onAddDeviceClick: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onAddDeviceClick }) => {
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { logout } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    setIsUserMenuOpen(false);
-    toast({
-      title: "Logged out successfully",
-      description: "See you soon!",
-    });
-    navigate('/login');
-  };
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-16 px-6 flex items-center justify-between bg-black bg-opacity-50 backdrop-blur-md border-b border-halo-accent border-opacity-20">
-      <div className="flex-shrink-0">
-        <h1 className="text-xl md:text-2xl font-bold neon-text tracking-wider">HALO OS</h1>
-      </div>
-      <div className="flex items-center space-x-4">
-        <button 
-          className="p-2 rounded-lg hover:bg-halo-accent hover:bg-opacity-20 transition-all duration-300"
-          aria-label="Add device"
-          onClick={onAddDeviceClick}
-        >
-          <Plus className="text-halo-accent w-6 h-6" />
-        </button>
-        <Popover open={isUserMenuOpen} onOpenChange={setIsUserMenuOpen}>
-          <PopoverTrigger asChild>
-            <button 
-              className="p-2 rounded-lg hover:bg-halo-accent hover:bg-opacity-20 transition-all duration-300"
-              aria-label="User profile"
-            >
-              <User className="text-halo-accent w-6 h-6" />
-            </button>
-          </PopoverTrigger>
-          <PopoverContent className="w-64 p-0 bg-black bg-opacity-90 border border-halo-accent border-opacity-30 text-white z-[100]">
-            <div className="p-4 border-b border-halo-accent border-opacity-20">
-              <div className="flex items-center space-x-3">
-                <Avatar>
-                  <AvatarImage src="/avatar.png" />
-                  <AvatarFallback className="bg-halo-accent bg-opacity-20 text-halo-accent">ZM</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-medium">Zaid Mallik</p>
-                  <p className="text-xs text-gray-400">Administrator</p>
-                </div>
-              </div>
-            </div>
-            <div className="p-2">
-              <button 
-                className="w-full flex items-center space-x-3 p-2 rounded-md hover:bg-halo-accent hover:bg-opacity-10 text-left transition-colors"
-              >
-                <Settings size={18} className="text-halo-accent" />
-                <span>Preferences</span>
-              </button>
-              <button 
-                className="w-full flex items-center space-x-3 p-2 rounded-md hover:bg-halo-accent hover:bg-opacity-10 text-left transition-colors"
-                onClick={handleLogout}
-              >
-                <LogOut size={18} className="text-halo-accent" />
-                <span>Logout</span>
-              </button>
-            </div>
-          </PopoverContent>
-        </Popover>
+    <nav className="bg-black bg-opacity-50 backdrop-blur-lg border-b border-halo-accent border-opacity-20 px-6 py-4">
+      <div className="flex items-center justify-between">
+        {/* Left side - Logo and Title */}
+        <div className="flex items-center">
+          <img src="/halo-logo.png" alt="HALO Logo" className="h-8 mr-3" />
+          <h1 className="text-xl font-bold text-white">HALO System</h1>
+        </div>
+
+        {/* Right side - Device Alerts, Add Device, and User Menu */}
+        <div className="flex items-center space-x-4">
+          <DeviceAlertsSystem />
+          
+          <Button 
+            onClick={onAddDeviceClick}
+            className="bg-halo-accent text-black hover:bg-halo-accent hover:opacity-80 font-medium"
+            size="sm"
+          >
+            <Plus className="w-4 h-4 mr-1" />
+            Add Device
+          </Button>
+
+          {/* User Menu */}
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <User className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 mr-2">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={logout}>
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
       </div>
     </nav>
   );

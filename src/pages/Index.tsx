@@ -9,10 +9,32 @@ import PairedDevicesManager from '@/components/PairedDevicesManager';
 import MappingPanel from '@/components/MappingPanel';
 import TestModePanel from '@/components/TestModePanel';
 import StatsPanel from '@/components/StatsPanel';
+import FirmwareUpdatePanel from '@/components/FirmwareUpdatePanel';
+import LiveDeviceMap from '@/components/LiveDeviceMap';
+import SmartDiagnostics from '@/components/SmartDiagnostics';
+import UsageHistoryPanel from '@/components/UsageHistoryPanel';
+import PerformanceModeToggle from '@/components/PerformanceModeToggle';
 
 const Index = () => {
   const [currentDevice, setCurrentDevice] = useState('shoe');
   const [isAddDeviceModalOpen, setIsAddDeviceModalOpen] = useState(false);
+  
+  // Mock firmware updates data
+  const firmwareUpdates = [
+    {
+      deviceId: 'gun-001',
+      deviceName: 'Primary Gun',
+      currentVersion: 'v1.0.3',
+      availableVersion: 'v1.1.0',
+      updateSize: '2.4 MB',
+      releaseNotes: [
+        'Improved motion tracking accuracy',
+        'Reduced input latency by 15%',
+        'Enhanced battery optimization',
+        'Bug fixes and stability improvements'
+      ]
+    }
+  ];
   
   // Render content based on selected device
   const renderContent = () => {
@@ -22,7 +44,23 @@ const Index = () => {
       case 'test':
         return <TestModePanel />;
       case 'devices':
-        return <PairedDevicesManager />;
+        return (
+          <div className="space-y-6">
+            <PairedDevicesManager />
+            <FirmwareUpdatePanel updates={firmwareUpdates} />
+          </div>
+        );
+      case 'diagnostics':
+        return (
+          <div className="space-y-6">
+            <LiveDeviceMap />
+            <SmartDiagnostics />
+          </div>
+        );
+      case 'analytics':
+        return <UsageHistoryPanel />;
+      case 'settings':
+        return <PerformanceModeToggle />;
       default:
         return <HardwareControl deviceType={currentDevice} />;
     }
