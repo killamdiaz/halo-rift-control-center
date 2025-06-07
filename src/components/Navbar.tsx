@@ -23,7 +23,7 @@ const Navbar: React.FC<NavbarProps> = ({ onAddDeviceClick, showRightSidebar = fa
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-black bg-opacity-50 backdrop-blur-lg border-b border-halo-accent border-opacity-20 px-6 py-4 w-full">
+    <nav className={`bg-black bg-opacity-50 backdrop-blur-lg border-b border-halo-accent border-opacity-20 px-6 py-4 ${showRightSidebar ? '' : 'w-full'}`}>
       <div className="flex items-center justify-between">
         {/* Left side - Title only */}
         <div className="flex items-center">
