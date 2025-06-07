@@ -23,7 +23,7 @@ const Index = () => {
   const firmwareUpdates = [
     {
       deviceId: 'gun-001',
-      deviceName: 'Primary Gun',
+      deviceName: 'HALO Gun',
       currentVersion: 'v1.0.3',
       availableVersion: 'v1.1.0',
       updateSize: '2.4 MB',
@@ -41,38 +41,32 @@ const Index = () => {
   
   // Render content based on selected device
   const renderContent = () => {
-    const baseClasses = showRightSidebar ? '' : 'px-6 py-6';
-    
     switch(currentDevice) {
       case 'test':
-        return (
-          <div className={baseClasses}>
-            <TestModePanel />
-          </div>
-        );
+        return <TestModePanel />;
       case 'devices':
         return (
-          <div className={`space-y-6 ${baseClasses}`}>
+          <div className="space-y-6 p-6">
             <PairedDevicesManager />
             <FirmwareUpdatePanel updates={firmwareUpdates} />
           </div>
         );
       case 'diagnostics':
         return (
-          <div className={`space-y-6 ${baseClasses}`}>
+          <div className="space-y-6 p-6">
             <LiveDeviceMap />
             <SmartDiagnostics />
           </div>
         );
       case 'analytics':
         return (
-          <div className={baseClasses}>
+          <div className="p-6">
             <UsageHistoryPanel />
           </div>
         );
       case 'settings':
         return (
-          <div className={baseClasses}>
+          <div className="p-6">
             <PerformanceModeToggle currentMode={currentMode} onModeChange={setCurrentMode} />
           </div>
         );
@@ -89,18 +83,22 @@ const Index = () => {
           onDeviceChange={setCurrentDevice}
           currentMode={currentMode}
         />
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0">
           <Navbar 
             onAddDeviceClick={() => setIsAddDeviceModalOpen(true)} 
             showRightSidebar={showRightSidebar}
           />
-          {renderContent()}
+          <div className="flex-1 flex min-h-0">
+            <div className={`flex-1 ${showRightSidebar ? '' : 'w-full'}`}>
+              {renderContent()}
+            </div>
+            
+            {/* Right stats sidebar - only show when viewing hardware device */}
+            {showRightSidebar && (
+              <StatsPanel deviceType={currentDevice} />
+            )}
+          </div>
         </div>
-        
-        {/* Right stats sidebar - only show when viewing hardware device */}
-        {showRightSidebar && (
-          <StatsPanel deviceType={currentDevice} />
-        )}
         
         <EnhancedAddDeviceModal 
           open={isAddDeviceModalOpen} 

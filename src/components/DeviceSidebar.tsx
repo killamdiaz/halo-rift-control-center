@@ -28,14 +28,14 @@ export default function DeviceSidebar({ currentDevice, onDeviceChange, currentMo
   
   const deviceItems = [
     {
-      title: "Left Shoe",
+      title: "HALO Shoe",
       icon: Footprints,
       id: "shoe",
       isConnected: true,
       battery: 85
     },
     {
-      title: "Primary Gun", 
+      title: "HALO Gun", 
       icon: Target,
       id: "gun",
       isConnected: true,
