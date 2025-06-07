@@ -74,7 +74,7 @@ const Auth: React.FC = () => {
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
           <h1 className="text-5xl font-bold text-white tracking-tight">H.A.L.O</h1>
-          <h2 className="text-xl mt-2 text-halo-accent neon-text">Haptic Augmented Locomotion Optimizer</h2>
+          <h2 className="text-xl mt-2 text-halo-accent neon-text">Haptic Assisted Locomotion Object</h2>
         </div>
         
         <Card className="border border-halo-accent border-opacity-30 bg-black bg-opacity-60 backdrop-blur-md">
