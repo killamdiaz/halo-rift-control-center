@@ -35,32 +35,53 @@ const Index = () => {
       ]
     }
   ];
+
+  // Determine if we should show the right sidebar (only for hardware devices)
+  const showRightSidebar = ['shoe', 'gun', 'suit'].includes(currentDevice);
   
   // Render content based on selected device
   const renderContent = () => {
+    const baseClasses = showRightSidebar ? '' : 'px-6 py-6';
+    
     switch(currentDevice) {
       case 'mapping':
-        return <MappingPanel />;
+        return (
+          <div className={baseClasses}>
+            <MappingPanel />
+          </div>
+        );
       case 'test':
-        return <TestModePanel />;
+        return (
+          <div className={baseClasses}>
+            <TestModePanel />
+          </div>
+        );
       case 'devices':
         return (
-          <div className="space-y-6">
+          <div className={`space-y-6 ${baseClasses}`}>
             <PairedDevicesManager />
             <FirmwareUpdatePanel updates={firmwareUpdates} />
           </div>
         );
       case 'diagnostics':
         return (
-          <div className="space-y-6">
+          <div className={`space-y-6 ${baseClasses}`}>
             <LiveDeviceMap />
             <SmartDiagnostics />
           </div>
         );
       case 'analytics':
-        return <UsageHistoryPanel />;
+        return (
+          <div className={baseClasses}>
+            <UsageHistoryPanel />
+          </div>
+        );
       case 'settings':
-        return <PerformanceModeToggle />;
+        return (
+          <div className={baseClasses}>
+            <PerformanceModeToggle />
+          </div>
+        );
       default:
         return <HardwareControl deviceType={currentDevice} />;
     }
@@ -79,7 +100,7 @@ const Index = () => {
         </div>
         
         {/* Right stats sidebar - only show when viewing hardware device */}
-        {['shoe', 'gun', 'suit'].includes(currentDevice) && (
+        {showRightSidebar && (
           <StatsPanel deviceType={currentDevice} />
         )}
         

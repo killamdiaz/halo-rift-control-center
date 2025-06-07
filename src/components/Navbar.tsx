@@ -1,3 +1,4 @@
+
 import React, { useContext, useState } from 'react';
 import { Plus, User, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -23,10 +24,9 @@ const Navbar: React.FC<NavbarProps> = ({ onAddDeviceClick }) => {
   return (
     <nav className="bg-black bg-opacity-50 backdrop-blur-lg border-b border-halo-accent border-opacity-20 px-6 py-4">
       <div className="flex items-center justify-between">
-        {/* Left side - Logo and Title */}
+        {/* Left side - Title only */}
         <div className="flex items-center">
-          <img src="/halo-logo.png" alt="HALO Logo" className="h-8 mr-3" />
-          <h1 className="text-xl font-bold text-white">HALO System</h1>
+          <h1 className="text-xl font-bold text-halo-accent">HALO OS</h1>
         </div>
 
         {/* Right side - Device Alerts, Add Device, and User Menu */}
