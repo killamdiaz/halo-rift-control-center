@@ -150,13 +150,13 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ deviceType }) => {
           {/* Device Specific Metrics */}
           {deviceType === 'shoe' && (
             <>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20">
+              {/* <div className="flex items-center justify-between p-3 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20">
                 <div className="flex items-center space-x-2">
                   <Activity className="w-4 h-4 text-halo-accent" />
                   <span className="text-sm text-white">Pressure</span>
                 </div>
                 <span className="text-sm text-white font-medium">{stats.pressure}</span>
-              </div>
+              </div> */}
 
               {/* Latency Graph and Jitter */}
               <div className="p-3 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20">
@@ -264,12 +264,12 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ deviceType }) => {
           )}
 
           {/* Real-time Graph Placeholder */}
-          <div className="p-4 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20">
+          {/* <div className="p-4 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20">
             <h3 className="text-sm font-medium text-white mb-3">Performance</h3>
             <div className="h-20 bg-halo-accent bg-opacity-10 rounded flex items-center justify-center">
               <span className="text-xs text-white opacity-50">Real-time data visualization</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

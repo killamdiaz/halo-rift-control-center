@@ -23,10 +23,12 @@ const Navbar: React.FC<NavbarProps> = ({ onAddDeviceClick, showRightSidebar = fa
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   return (
-    <nav className={`bg-black bg-opacity-50 backdrop-blur-lg border-b border-halo-accent border-opacity-20 px-6 py-3 flex-shrink-0 ${showRightSidebar ? 'flex-1' : 'w-full'}`}>
+    <nav className="bg-black bg-opacity-50 backdrop-blur-lg border-b border-halo-accent border-opacity-20 px-6 py-4 w-full flex-shrink-0">
       <div className="flex items-center justify-between w-full">
-        {/* Left side - Empty spacer */}
-        <div className="flex-1"></div>
+        {/* Left side - Title only */}
+        <div className="flex items-center">
+          {/* <h1 className="text-xl font-bold text-blue-400">HALO OS</h1> */}
+        </div>
 
         {/* Right side - Device Alerts, Add Device, and User Menu */}
         <div className="flex items-center space-x-4">
