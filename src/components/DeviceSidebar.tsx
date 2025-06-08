@@ -92,11 +92,6 @@ export default function DeviceSidebar({ currentDevice, onDeviceChange, currentMo
     <aside className={`bg-black bg-opacity-40 backdrop-blur-lg border-r border-halo-accent border-opacity-20 w-64 flex-shrink-0 ${state === 'expanded' ? 'block' : 'hidden'} md:block`}>
       <ScrollArea className="py-4 h-full">
         <div className="px-3 py-2 flex flex-col h-full">
-          {/* HALO OS Title */}
-          <div className="px-4 mb-6">
-            <h1 className="text-xl font-bold text-blue-400">HALO OS</h1>
-          </div>
-
           <div className="flex-1">
             <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
               Devices
