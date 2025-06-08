@@ -41,38 +41,36 @@ const Index = () => {
   
   // Render content based on selected device
   const renderContent = () => {
-    const baseClasses = showRightSidebar ? '' : 'px-6 py-6';
-    
     switch(currentDevice) {
       case 'test':
         return (
-          <div className={baseClasses}>
+          <div className="flex-1 px-6 py-6">
             <TestModePanel />
           </div>
         );
       case 'devices':
         return (
-          <div className={`space-y-6 ${baseClasses}`}>
+          <div className="flex-1 px-6 py-6 space-y-6">
             <PairedDevicesManager />
             <FirmwareUpdatePanel updates={firmwareUpdates} />
           </div>
         );
       case 'diagnostics':
         return (
-          <div className={`space-y-6 ${baseClasses}`}>
+          <div className="flex-1 px-6 py-6 space-y-6">
             <LiveDeviceMap />
             <SmartDiagnostics />
           </div>
         );
       case 'analytics':
         return (
-          <div className={baseClasses}>
+          <div className="flex-1 px-6 py-6">
             <UsageHistoryPanel />
           </div>
         );
       case 'settings':
         return (
-          <div className={baseClasses}>
+          <div className="flex-1 px-6 py-6">
             <PerformanceModeToggle currentMode={currentMode} onModeChange={setCurrentMode} />
           </div>
         );
@@ -83,24 +81,26 @@ const Index = () => {
   
   return (
     <SidebarProvider defaultOpen={true}>
-      <div className="min-h-screen bg-halo-gradient text-white flex">
+      <div className="min-h-screen bg-halo-gradient text-white flex w-full">
         <DeviceSidebar 
           currentDevice={currentDevice}
           onDeviceChange={setCurrentDevice}
           currentMode={currentMode}
         />
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0">
           <Navbar 
             onAddDeviceClick={() => setIsAddDeviceModalOpen(true)} 
             showRightSidebar={showRightSidebar}
           />
-          {renderContent()}
+          <div className="flex-1 flex min-h-0">
+            {renderContent()}
+            
+            {/* Right stats sidebar - only show when viewing hardware device */}
+            {showRightSidebar && (
+              <StatsPanel deviceType={currentDevice} />
+            )}
+          </div>
         </div>
-        
-        {/* Right stats sidebar - only show when viewing hardware device */}
-        {showRightSidebar && (
-          <StatsPanel deviceType={currentDevice} />
-        )}
         
         <EnhancedAddDeviceModal 
           open={isAddDeviceModalOpen} 
