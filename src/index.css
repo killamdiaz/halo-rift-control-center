@@ -1,0 +1,232 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-halo-gradient text-foreground overflow-x-hidden;
+  }
+
+  /* Custom scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #121212;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 204, 255, 0.5);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 204, 255, 0.8);
+  }
+}
+
+@layer components {
+  .hotspot {
+    @apply absolute flex items-center justify-center w-12 h-12 rounded-full 
+           bg-halo-accent bg-opacity-20 border border-halo-accent cursor-pointer
+           backdrop-blur-sm transition-all duration-300 animate-soft-glow-pulse
+           hover:bg-opacity-40 hover:scale-110 z-10;
+  }
+
+  .hotspot-line {
+    @apply absolute bg-halo-accent h-px z-0;
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
+  }
+
+  .setting-panel {
+    @apply absolute p-4 rounded-lg bg-black bg-opacity-75 border border-halo-accent 
+           backdrop-blur-md shadow-lg animate-fade-in z-50;
+  }
+  
+  .neon-text {
+    @apply text-halo-accent font-medium tracking-wide;
+    text-shadow: 0 0 5px rgba(0, 204, 255, 0.7);
+  }
+
+  .neon-border {
+    @apply border border-halo-accent;
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.5), inset 0 0 5px rgba(0, 204, 255, 0.2);
+  }
+  
+  .slider-track {
+    @apply h-1 rounded-full bg-gray-700;
+  }
+  
+  .slider-thumb {
+    @apply w-4 h-4 rounded-full bg-halo-accent cursor-pointer
+           shadow-lg transition-transform duration-150 hover:scale-125;
+    box-shadow: 0 0 8px rgba(0, 204, 255, 0.7);
+  }
+
+  .glow-effect {
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.7);
+  }
+
+  /* Radar animation */
+  .radar-sweep {
+    animation: radar-rotate 4s infinite linear;
+    transform-origin: center;
+  }
+
+  @keyframes radar-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Keyboard specific styles */
+  .keyboard-key {
+    @apply w-10 h-10 rounded bg-black bg-opacity-60 border border-white border-opacity-30
+           flex items-center justify-center transition-all duration-300
+           hover:border-halo-accent hover:border-opacity-70 hover:bg-halo-accent hover:bg-opacity-20;
+  }
+  
+  .keyboard-key-active {
+    @apply border-halo-accent bg-halo-accent bg-opacity-30;
+    box-shadow: 0 0 8px rgba(0, 204, 255, 0.7), inset 0 0 5px rgba(0, 204, 255, 0.3);
+  }
+  
+  /* Soft glow pulse animation for hotspots - slower and smoother */
+  .animate-soft-glow-pulse {
+    animation: soft-glow-pulse 3s infinite ease-in-out;
+  }
+  
+  @keyframes soft-glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(0, 204, 255, 0.2), 0 0 5px rgba(0, 204, 255, 0.3);
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    25% {
+      box-shadow: 0 0 0 8px rgba(0, 204, 255, 0.08), 0 0 10px rgba(0, 204, 255, 0.4);
+      transform: scale(1.02);
+      opacity: 0.85;
+    }
+    50% {
+      box-shadow: 0 0 0 16px rgba(0, 204, 255, 0.04), 0 0 15px rgba(0, 204, 255, 0.5);
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+    75% {
+      box-shadow: 0 0 0 8px rgba(0, 204, 255, 0.08), 0 0 10px rgba(0, 204, 255, 0.4);
+      transform: scale(1.02);
+      opacity: 0.85;
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+@keyframes radar-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar-sweep {
+  animation: radar-sweep 4s infinite linear;
+}
+
+/* Background gradient for HALO interface */
+.bg-halo-gradient {
+  background: linear-gradient(135deg, #0a0a0a 0%, #121212 100%);
+}
+
+/* Improved glass effect for sidebar and panels */
+.glassmorphism {
+  @apply backdrop-blur-lg bg-black bg-opacity-40 border border-halo-accent border-opacity-20;
+}
