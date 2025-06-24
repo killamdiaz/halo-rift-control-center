@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 // ────────────────────────────────────────────────────────────
 // Simple global cache so every StatsPanel instance can share
@@ -184,6 +183,22 @@ const getDeviceStats = () => {
         upload: liveStats?.upload ?? 24.5,
         download: liveStats?.download ?? 156.8,
       };
+    case 'quest':
+      return {
+        battery: liveStats?.battery ?? 68,
+        status:
+          liveStats?.isConnected &&
+          liveStats?.name?.toLowerCase().includes('quest')
+            ? 'Connected'
+            : 'Disconnected',
+        temperature: liveStats?.temperature ?? 32,
+        ipAddress: liveStats?.ipAddress ?? '192.168.0.105',
+        frameRate: liveStats?.frameRate ?? '90 FPS',
+        resolution: liveStats?.resolution ?? '2880x1700',
+        jitter: liveStats?.jitter ?? 1.8,
+        upload: liveStats?.upload ?? 45.2,
+        download: liveStats?.download ?? 234.6,
+      };
     default:
       return {
         battery: 0,
@@ -347,7 +362,9 @@ if (deviceType === 'belt') {
         <div className="space-y-6">
           {/* Device Header */}
           <div className="text-center">
-            <h2 className="text-lg font-bold text-halo-accent mb-2">HALO {deviceName.toUpperCase()}</h2>
+            <h2 className="text-lg font-bold text-halo-accent mb-2">
+              {deviceType === 'quest' ? 'META QUEST' : `HALO ${deviceName.toUpperCase()}`}
+            </h2>
             <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
               stats.status === 'Connected' || stats.status === 'Ready' 
                 ? 'bg-green-500 bg-opacity-20 text-green-400 border border-green-500 border-opacity-30' 
@@ -398,6 +415,74 @@ if (deviceType === 'belt') {
               </div>
 
               {/* Device Specific Metrics */}
+              {deviceType === 'quest' && (
+                <>
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20">
+                    <div className="flex items-center space-x-2">
+                      <Wifi className="w-4 h-4 text-halo-accent" />
+                      <span className="text-sm text-white">IP Address</span>
+                    </div>
+                    <span className="text-sm text-white font-mono">{stats.ipAddress}</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20 text-center">
+                      <div className="text-lg font-bold text-halo-accent">{stats.frameRate}</div>
+                      <div className="text-xs text-white opacity-70">Frame Rate</div>
+                    </div>
+                    <div className="p-3 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20 text-center">
+                      <div className="text-lg font-bold text-halo-accent">{stats.resolution}</div>
+                      <div className="text-xs text-white opacity-70">Resolution</div>
+                    </div>
+                  </div>
+
+                  {/* Latency Graph and Jitter */}
+                  <div className="p-3 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-white">Latency</span>
+                      <span className="text-sm text-halo-accent font-medium">{currentLatency.toFixed(1)} ms</span>
+                    </div>
+                    <div className="h-16 mb-2">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={latencyData}>
+                          <XAxis dataKey="time" hide />
+                          <YAxis hide domain={['dataMin - 2', 'dataMax + 2']} />
+                          <Line 
+                            type="monotone" 
+                            dataKey="latency" 
+                            stroke="#00ccff" 
+                            strokeWidth={2}
+                            dot={false}
+                            strokeOpacity={0.8}
+                          />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                    <div className="text-xs text-white opacity-70">
+                      Jitter: {stats.jitter} ms
+                    </div>
+                  </div>
+
+                  {/* Network Stats */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20 text-center">
+                      <div className="flex items-center justify-center mb-1">
+                        <ArrowUp className="w-3 h-3 text-halo-accent mr-1" />
+                      </div>
+                      <div className="text-lg font-bold text-halo-accent">{stats.upload}</div>
+                      <div className="text-xs text-white opacity-70">Mbps Up</div>
+                    </div>
+                    <div className="p-3 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20 text-center">
+                      <div className="flex items-center justify-center mb-1">
+                        <ArrowDown className="w-3 h-3 text-halo-accent mr-1" />
+                      </div>
+                      <div className="text-lg font-bold text-halo-accent">{stats.download}</div>
+                      <div className="text-xs text-white opacity-70">Mbps Down</div>
+                    </div>
+                  </div>
+                </>
+              )}
+
               {deviceType === 'shoe' && (
                 <>
                   {/* <div className="flex items-center justify-between p-3 rounded-lg bg-black bg-opacity-30 border border-halo-accent border-opacity-20">
