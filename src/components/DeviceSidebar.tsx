@@ -10,7 +10,8 @@ import {
   Footprints,
   Target,
   ShirtIcon,
-  Cpu
+  Cpu,
+  Headphones
 } from 'lucide-react';
 import { NavItem } from "@/components/ui/nav-item"
 import { Separator } from "@/components/ui/separator"
@@ -54,6 +55,13 @@ export default function DeviceSidebar({ currentDevice, onDeviceChange, currentMo
       id: "suit",
       isConnected: false,
       battery: 15
+    },
+    {
+      title: "Meta Quest",
+      icon: Headphones,
+      id: "quest",
+      isConnected: true,
+      battery: 68
     }
   ];
 
