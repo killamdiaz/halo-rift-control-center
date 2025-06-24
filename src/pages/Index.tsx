@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import HardwareControl from '@/components/HardwareControl';
@@ -14,7 +13,6 @@ import SmartDiagnostics from '@/components/SmartDiagnostics';
 import UsageHistoryPanel from '@/components/UsageHistoryPanel';
 import PerformanceModeToggle from '@/components/PerformanceModeToggle';
 import BeltControlPanel from '@/components/BeltControlPanel';
-import QuestControlPanel from '@/components/QuestControlPanel';
 
 const Index = () => {
   const [currentDevice, setCurrentDevice] = useState('shoe');
@@ -40,7 +38,7 @@ const Index = () => {
   ];
 
   // Determine if we should show the right sidebar (only for hardware devices)
-  const showRightSidebar = ['shoe', 'gun', 'suit', 'belt', 'quest'].includes(currentDevice);
+  const showRightSidebar = ['shoe', 'gun', 'suit', 'belt'].includes(currentDevice);
   
   // Render content based on selected device
   const renderContent = () => {
@@ -48,10 +46,6 @@ const Index = () => {
       case 'belt':
         return (
           <BeltControlPanel onBeltSelect={setSelectedBelt} />
-        );
-      case 'quest':
-        return (
-          <QuestControlPanel />
         );
       case 'test':
         return (
