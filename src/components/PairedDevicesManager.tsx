@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { X, Footprints, Gamepad2, ShirtIcon, Edit3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -5,7 +6,6 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import DeviceDetailsPanel from './DeviceDetailsPanel';
 import DeviceHealthMonitor from './DeviceHealthMonitor';
 import { toast } from '@/hooks/use-toast';
-
 
 const ipcRenderer = window.electron?.ipcRenderer as {
   send: (channel: string, data?: any) => void;
