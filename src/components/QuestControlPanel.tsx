@@ -37,7 +37,7 @@ const QuestControlPanel = () => {
         </Button>
       </div>
 
-      {/* Status Cards Grid */}
+      {/* Status Cards Grid
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="bg-black bg-opacity-40 backdrop-blur-lg border-halo-accent border-opacity-20">
           <CardHeader className="pb-2">
@@ -101,7 +101,7 @@ const QuestControlPanel = () => {
             </Badge>
           </CardContent>
         </Card>
-      </div>
+      </div> */}
 
       {/* Device Image - Centered */}
       <div className="flex justify-center py-6">
