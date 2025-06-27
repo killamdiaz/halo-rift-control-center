@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import HardwareControl from '@/components/HardwareControl';
@@ -14,6 +15,7 @@ import UsageHistoryPanel from '@/components/UsageHistoryPanel';
 import PerformanceModeToggle from '@/components/PerformanceModeToggle';
 import BeltControlPanel from '@/components/BeltControlPanel';
 import QuestControlPanel from '@/components/QuestControlPanel';
+import LiveTelemetryDashboard from '@/components/LiveTelemetryDashboard';
 
 const Index = () => {
   const [currentDevice, setCurrentDevice] = useState('shoe');
@@ -51,6 +53,10 @@ const Index = () => {
       case 'quest':
         return (
           <QuestControlPanel />
+        );
+      case 'telemetry':
+        return (
+          <LiveTelemetryDashboard />
         );
       case 'test':
         return (

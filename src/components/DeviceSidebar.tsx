@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   LayoutDashboard,
@@ -11,7 +10,8 @@ import {
   Target,
   ShirtIcon,
   Cpu,
-  Headphones
+  Headphones,
+  Radio
 } from 'lucide-react';
 import { NavItem } from "@/components/ui/nav-item"
 import { Separator } from "@/components/ui/separator"
@@ -70,6 +70,11 @@ export default function DeviceSidebar({ currentDevice, onDeviceChange, currentMo
       title: "Paired Devices",
       icon: Settings,
       id: "devices"
+    },
+    {
+      title: "Live Telemetry",
+      icon: Radio,
+      id: "telemetry"
     },
     {
       title: "Test Mode",
