@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { 
   Radio, 
   Footprints, 
@@ -10,10 +11,12 @@ import {
   Activity,
   Zap,
   Eye,
-  Clock
+  Clock,
+  TestTube
 } from 'lucide-react';
 
 const LiveTelemetryDashboard = () => {
+  const [isTestingVibration, setIsTestingVibration] = useState(false);
   const [telemetryData, setTelemetryData] = useState({
     leftShoe: {
       connected: true,
@@ -32,6 +35,7 @@ const LiveTelemetryDashboard = () => {
     gun: {
       connected: true,
       lastPacket: 25,
+      imu: { roll: 0, pitch: 0, yaw: 0 },
       triggerPressure: 0,
       state: 'Idle'
     },
@@ -52,6 +56,16 @@ const LiveTelemetryDashboard = () => {
       }
     }
   });
+
+  // Handle vibration test
+  const handleVibrationTest = () => {
+    setIsTestingVibration(true);
+    
+    // Stop test after 3 seconds
+    setTimeout(() => {
+      setIsTestingVibration(false);
+    }, 3000);
+  };
 
   // Simulate live data updates
   useEffect(() => {
@@ -88,6 +102,11 @@ const LiveTelemetryDashboard = () => {
         gun: {
           ...prev.gun,
           lastPacket: Math.floor(Math.random() * 50) + 15,
+          imu: {
+            roll: (Math.random() - 0.5) * 180,
+            pitch: (Math.random() - 0.5) * 180,
+            yaw: (Math.random() - 0.5) * 180
+          },
           triggerPressure: Math.random() * 100,
           state: Math.random() > 0.8 ? '🔫 Trigger Pulled' : 'Idle'
         },
@@ -99,7 +118,7 @@ const LiveTelemetryDashboard = () => {
             pitch: (Math.random() - 0.5) * 180,
             yaw: (Math.random() - 0.5) * 180
           },
-          vibrationZones: {
+          vibrationZones: isTestingVibration ? {
             chestL: Math.random() > 0.8,
             chestR: Math.random() > 0.8,
             armL: Math.random() > 0.9,
@@ -109,13 +128,23 @@ const LiveTelemetryDashboard = () => {
             shoulderL: Math.random() > 0.9,
             shoulderR: Math.random() > 0.9,
             stomach: Math.random() > 0.95
+          } : {
+            chestL: false,
+            chestR: false,
+            armL: false,
+            armR: false,
+            legL: false,
+            legR: false,
+            shoulderL: false,
+            shoulderR: false,
+            stomach: false
           }
         }
       }));
     }, 250);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isTestingVibration]);
 
   const VibrationZone = ({ name, active }: { name: string; active: boolean }) => (
     <div className={`px-2 py-1 rounded text-xs border transition-all duration-200 ${
@@ -258,6 +287,20 @@ const LiveTelemetryDashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div className="grid grid-cols-3 gap-2 text-sm">
+              <div className="bg-gray-800 bg-opacity-50 p-2 rounded">
+                <div className="text-gray-400 text-xs">Roll</div>
+                <div className="text-halo-accent font-mono">{telemetryData.gun.imu.roll.toFixed(1)}°</div>
+              </div>
+              <div className="bg-gray-800 bg-opacity-50 p-2 rounded">
+                <div className="text-gray-400 text-xs">Pitch</div>
+                <div className="text-halo-accent font-mono">{telemetryData.gun.imu.pitch.toFixed(1)}°</div>
+              </div>
+              <div className="bg-gray-800 bg-opacity-50 p-2 rounded">
+                <div className="text-gray-400 text-xs">Yaw</div>
+                <div className="text-halo-accent font-mono">{telemetryData.gun.imu.yaw.toFixed(1)}°</div>
+              </div>
+            </div>
             <div className="bg-gray-800 bg-opacity-50 p-4 rounded">
               <div className="text-gray-400 text-sm mb-2">Trigger Pressure</div>
               <div className="text-2xl text-red-400 font-mono">{telemetryData.gun.triggerPressure.toFixed(1)}%</div>
@@ -307,9 +350,21 @@ const LiveTelemetryDashboard = () => {
               </div>
             </div>
             <div>
-              <div className="text-gray-400 text-sm mb-2 flex items-center">
-                <Zap className="w-4 h-4 mr-1" />
-                Active Vibration Zones
+              <div className="text-gray-400 text-sm mb-2 flex items-center justify-between">
+                <div className="flex items-center">
+                  <Zap className="w-4 h-4 mr-1" />
+                  Active Vibration Zones
+                </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={handleVibrationTest}
+                  disabled={isTestingVibration}
+                  className="h-6 px-2 text-xs border-halo-accent border-opacity-30 hover:border-halo-accent hover:bg-halo-accent hover:bg-opacity-10"
+                >
+                  <TestTube className="w-3 h-3 mr-1" />
+                  {isTestingVibration ? 'Testing...' : 'Test'}
+                </Button>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <VibrationZone name="Chest L" active={telemetryData.suit.vibrationZones.chestL} />
